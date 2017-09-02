@@ -63,6 +63,7 @@ def generator_containing_discriminator(g, d):
 	model.add(g)
 	d.trainable = False
 	model.add(d)
+	model.summary()
 	return model
 
 def combine_images(generated_images):
@@ -159,7 +160,7 @@ def generate(BATCH_SIZE, nice=False):
 		noise = np.random.uniform(-1, 1, (BATCH_SIZE*20, 100))
 		generated_images = g.predict(noise, verbose=1)
 		d_pret = d.predict(generated_images, verbose=1)
-		index = np.arange(0, BATCH_SIZE*20)
+		index  = np.arange(0, BATCH_SIZE*20)
 		index.resize((BATCH_SIZE*20, 1))
 		pre_with_index = list(np.append(d_pret, index, axis=1))
 		pre_with_index.sort(key=lambda x: x[0], reverse=True)
